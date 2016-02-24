@@ -14,15 +14,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TabHost;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     EditText nameTxt, phoneTxt, emailTxt, adressTxt;
+    List<Contact> Contacts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +99,12 @@ public class MainActivity extends AppCompatActivity
         tabHosts.addTab(tabSpec);
 
 
+    }
+
+    private class ContactListAdapter extends ArrayAdapter<Contact> {
+        public ContactListAdapter () {
+            super (MainActivity.this )
+        }
     }
 
     @Override
