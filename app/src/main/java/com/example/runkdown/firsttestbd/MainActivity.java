@@ -3,6 +3,8 @@ package com.example.runkdown.firsttestbd;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,10 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TabHost;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    EditText nameTxt, phoneTxt, emailTxt, adressTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,50 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        nameTxt = (EditText) findViewById(R.id.txtName);
+        phoneTxt = (EditText) findViewById(R.id.txtPhone);
+        emailTxt = (EditText) findViewById(R.id.txtEmail);
+        adressTxt = (EditText) findViewById(R.id.txtAdress);
+        TabHost tabHosts = (TabHost) findViewById(R.id.tabHost);
+
+        final Button addBtn = (Button) findViewById(R.id.btnAdd);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Your contact has been saved", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        nameTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                addBtn.setEnabled(!nameTxt.getText().toString().trim().isEmpty());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        tabHosts.setup();
+
+        TabHost.TabSpec tabSpec = tabHosts.newTabSpec("creator");
+        tabSpec.setContent(R.id.tabCreator);
+        tabSpec.setIndicator("Creator");
+        tabHosts.addTab(tabSpec);
+
+        tabSpec = tabHosts.newTabSpec("list");
+        tabSpec.setContent(R.id.tabContactList);
+        tabSpec.setIndicator("List");
+        tabHosts.addTab(tabSpec);
 
 
     }
