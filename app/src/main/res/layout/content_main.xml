@@ -35,22 +35,6 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/tabContactList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Large Text"
-                        android:id="@+id/textView2"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="16dp" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/tabCreator"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
@@ -109,15 +93,31 @@
                         android:enabled="false" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/tabContactList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Large Text"
+                        android:id="@+id/textView2"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp" />
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="389dp"
+                        android:id="@+id/listView"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+
             </FrameLayout>
 
         </LinearLayout>
     </TabHost>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="389dp"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

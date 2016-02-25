@@ -14,10 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity
 
     EditText nameTxt, phoneTxt, emailTxt, adressTxt;
     List<Contact> Contacts = new ArrayList<>();
+    ListView contactListView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +63,17 @@ public class MainActivity extends AppCompatActivity
         phoneTxt = (EditText) findViewById(R.id.txtPhone);
         emailTxt = (EditText) findViewById(R.id.txtEmail);
         adressTxt = (EditText) findViewById(R.id.txtAdress);
+        contactListView = (ListView) findViewById(R.id.listView);
         TabHost tabHosts = (TabHost) findViewById(R.id.tabHost);
 
         final Button addBtn = (Button) findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Your contact has been saved", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, nameTxt.getText().toString() + " has been saved", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                populateList();
+                addContact(nameTxt.getText().toString() , phoneTxt.getText().toString(), emailTxt.getText().toString(), adressTxt.getText().toString());
             }
         });
 
@@ -101,10 +109,40 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void populateList() {
+        ArrayAdapter<Contact> adapter = new ContactListAdapter();
+        contactListView.setAdapter(adapter);
+    }
+
+    private void addContact (String name, String phone, String email, String address) {
+        Contacts.add(new Contact(name, phone, email, address));
+
+    }
+
     private class ContactListAdapter extends ArrayAdapter<Contact> {
         public ContactListAdapter () {
-            super (MainActivity.this )
+            super (MainActivity.this, R.layout.listview_item, Contacts  );
         }
+
+        @Override
+        public View getView(int position, View view, ViewGroup parent) {
+            if (view == null)
+                view = getLayoutInflater().inflate(R.layout.listview_item, parent, false);
+
+            Contact currentContact = Contacts.get(position);
+
+            TextView name = (TextView) view.findViewById(R.id.contactName);
+            name.setText(currentContact.getName());
+            TextView phone = (TextView) view.findViewById(R.id.phoneNumber);
+            phone.setText(currentContact.getPhone());
+            TextView email = (TextView) view.findViewById(R.id.emailAddress);
+            email.setText(currentContact.getEmail());
+            TextView address = (TextView) view.findViewById(R.id.cAddress);
+            address.setText(currentContact.getAddress());
+
+            return view;
+        }
+
     }
 
     @Override
